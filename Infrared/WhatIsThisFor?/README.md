@@ -1,1 +1,2 @@
-
+# Walmart.ir
+I recorded this signal while walking into a Wal-Mart Supercenter. The signal might be for the security system, but I really don't know...
