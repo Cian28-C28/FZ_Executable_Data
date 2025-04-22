@@ -10,18 +10,21 @@ Did you know tha crimes are illegal, even if they're fun? It's true; manipulatin
 
 Organizations like the FCC, FBI, NSA, and U.S. Space Force DO monitor cyberspace and the invisible world of wireless networking. The things you do on Flipper Zero are not necessarily untraceable. 500ms of fun ain't worth jailtime or fines. It's cool to be cautious and non-malicious.
 
-# SGHz
+# Contents:
+So what've we got in here?
+
+**SGHz**
 [There's nothing here yet]
 
-# Infrared
+**Infrared**
 - Remotes
 - Random things; IDK what they do
 
-# Bad_USB
+**Bad_USB**
 - BadSoft
 - iOS
 
-# Evil_Portal_HTML
+**Evil_Portal_HTML**
 - Trolling
 - Message Transfer
 
