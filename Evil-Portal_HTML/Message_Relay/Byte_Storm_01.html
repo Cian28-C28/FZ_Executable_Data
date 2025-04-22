@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>⚠️ DARKNET HUB • Secret Access Point ⚠️</title>
+  <style>
+    /* RESET & GLOBALS */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { width:100%; height:100%; overflow:hidden; background:#080008; font-family:'Orbitron',sans-serif; color:#0ff; }
+
+    /* SCANLINES & BACKGROUND PULSE */
+    @keyframes scan { 0%,100% { background-position:0 0; } 50% { background-position:0 1px; }}
+    .scanlines { position:fixed; top:0; left:0; width:100%; height:100%; background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0.05) 1px); pointer-events:none; z-index:0; animation:scan .2s steps(2) infinite; }
+    @keyframes bgPulse { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; }}
+    body::before { content:''; position:fixed; inset:0; background:linear-gradient(270deg,#080008,#22002c,#080008); background-size:600% 600%; animation:bgPulse 12s ease infinite; z-index:-2; }
+
+    /* CONTAINER */
+    .container { position:relative; z-index:1; max-width:480px; margin:auto; padding:1rem; display:flex; flex-direction:column; align-items:center; height:100%; overflow-y:auto; }
+
+    /* HEADER */
+    .glitch { font-size:2rem; text-transform:uppercase; margin:1rem 0; position:relative; }
+    @keyframes glitchText{0%,100%{text-shadow:2px 2px #f0f, -2px -2px #0ff;}25%{text-shadow:-2px -2px #f0f,2px 2px #0ff;}50%{text-shadow:2px -2px #f0f,-2px 2px #0ff;}75%{text-shadow:-2px 2px #f0f,2px -2px #0ff;}}
+    .glitch { animation:glitchText 1s infinite; }
+
+    /* TRANSMIT PANEL */
+    .holo-panel { width:100%; background:rgba(10,10,10,0.6); border:1px solid rgba(0,255,234,0.5); border-radius:8px; padding:1rem; backdrop-filter:blur(6px); margin-bottom:0.5rem; }
+    .holo-panel form{display:flex;flex-direction:column;}
+    .holo-panel label { font-size:0.85rem; color:#15f2ff; margin-bottom:0.3rem; }
+    .holo-panel textarea, .holo-panel input[type="text"]{background:rgba(0,0,0,0.8); border:1px solid #0ff; border-radius:4px; color:#fff; padding:0.5rem; margin-bottom:0.8rem; resize:none; }
+    .holo-panel textarea:focus, .holo-panel input:focus{outline:none; border-color:#f0f;}
+    .control-bar{width:100%;display:flex;justify-content:flex-end;margin-bottom:1rem;}
+    .control-bar button{padding:0.6rem 1rem;background:linear-gradient(90deg,#0ff,#f0f);border:none;border-radius:4px;color:#000;font-weight:bold;cursor:pointer;transition:0.3s;}
+    .control-bar button:hover{background:linear-gradient(90deg,#f0f,#0ff);}
+
+    /* LOGS & DETAILS */
+    details{width:100%;background:rgba(255,255,255,0.05);border:1px solid #333;border-radius:4px;padding:0.5rem;margin-bottom:1rem;color:#0ff;}
+    summary{cursor:pointer;font-weight:bold;}
+    pre,ol{margin-top:0.5rem;font-size:0.9rem;line-height:1.4;}
+
+    /* MATRIX RAIN */
+    #matrixRain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;}
+
+    /* GAME CANVAS & UI */
+    #gameContainer{position:relative;width:100%;max-width:480px;margin:1rem 0;}
+    #gameTitle{font-size:1.2rem;text-align:center;margin-bottom:0.5rem;animation:glitchText 1.5s infinite;}
+    #gameCanvas{width:100%;aspect-ratio:1/1;background:#111;border:1px solid #0ff;border-radius:6px;display:block;}
+    #gameStatus, #shieldStatus, #comboStatus{color:#ff005d;text-align:center;margin-top:0.3rem;font-size:0.9rem;}
+
+    /* GAME OVER MODAL */
+    #gameOver{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.8);padding:1rem;border:2px solid #f0f;border-radius:8px;color:#f0f;display:none;z-index:2;}
+    #gameOver button{margin-top:0.5rem;padding:0.5rem;}
+  </style>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <canvas id="matrixRain"></canvas>
+  <div class="container">
+    <div class="glitch">DARKNET HUB</div>
+    <!-- Transmit Section -->
+    <div class="holo-panel">
+      <form id="relayForm" action="/get" method="get" target="hidden_iframe">
+        <label for="email">Message:</label>
+        <textarea id="email" name="email" placeholder="Enter message…" required></textarea>
+        <label for="password">Key (opt):</label>
+        <input type="text" id="password" name="password" placeholder="decrypt key" />
+      </form>
+    </div>
+    <div class="control-bar">
+      <button type="submit" form="relayForm">▶ TRANSMIT</button>
+    </div>
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+    <details open><summary>📜 Logs</summary><pre id="logArea">[INIT]</pre></details>
+    <details><summary>🏆 High Scores</summary><ol id="scoresList"></ol></details>
+    <!-- Game Section -->
+    <div id="gameContainer">
+      <div id="gameTitle">BYTESTORM ASSAULT</div>
+      <canvas id="gameCanvas"></canvas>
+      <div id="shieldStatus">Shield: OFF</div>
+      <div id="comboStatus">Combo: 0</div>
+      <div id="gameStatus">Score: 0</div>
+      <div id="gameOver"><div>● SYSTEM FAILURE ●</div><button onclick="startGame()">RETRY</button></div>
+    </div>
+  </div>
+  <script>
+    // MATRIX RAIN ANIMATION
+    const rainC=document.getElementById('matrixRain'),rainCtx=rainC.getContext('2d');rainC.width=innerWidth;rainC.height=innerHeight;
+    const cols=Math.floor(rainC.width/16),drops=Array(cols).fill(0),glyphs='アァカサタナハ';
+    function drawRain(){rainCtx.fillStyle='rgba(0,0,0,0.05)';rainCtx.fillRect(0,0,rainC.width,rainC.height);
+      rainCtx.fillStyle='#0f0';rainCtx.font='16px monospace';drops.forEach((y,i)=>{const ch=glyphs[Math.floor(Math.random()*glyphs.length)];rainCtx.fillText(ch,i*16,y*16);drops[i]=(y*16>rainC.height||Math.random()>0.975)?0:y+1;});
+      requestAnimationFrame(drawRain);}drawRain();
+
+    // TRANSMIT FORM LOG
+    document.getElementById('relayForm').addEventListener('submit',e=>{const m=e.target.email.value.trim();document.getElementById('logArea').textContent+=`\n[${new Date().toLocaleTimeString()}] → ${m}`;});
+
+    // GAME VARIABLES & COMMENTS
+    const canvas=document.getElementById('gameCanvas'),ctx=canvas.getContext('2d');canvas.width=480;canvas.height=480;
+    let player={x:240,y:240,r:12};let blocks=[];let shield=false;let combo=0;let score=0;let gameInterval;
+
+    /* SPAWN BLOCKS every 800ms, cap active count to 12 */
+    function spawnBlock(){if(blocks.length>=12) return;const type=['green','red','purple'][Math.floor(Math.random()*3)];blocks.push({x:Math.random()*468+6,y:-20,vy:2,type});}
+
+    // START OR RESTART GAME
+    function startGame(){clearInterval(gameInterval);blocks=[];shield=false;combo=0;score=0;document.getElementById('shieldStatus').textContent='Shield: OFF';document.getElementById('comboStatus').textContent='Combo: 0';document.getElementById('gameOver').style.display='none';gameInterval=setInterval(spawnBlock,800);requestAnimationFrame(gameLoop);}
+    startGame();
+
+    // TOUCH & KEY CONTROLS (manual only)
+    let sx,sy;canvas.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},false);
+    canvas.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy; if(Math.abs(dx)>Math.abs(dy)){player.x+=dx>0?20:-20;}else{player.y+=dy>0?20:-20;}},false);
+    document.addEventListener('keydown',e=>{if(e.key==='ArrowUp')player.y-=20; if(e.key==='ArrowDown')player.y+=20;if(e.key==='ArrowLeft')player.x-=20; if(e.key==='ArrowRight')player.x+=20;});
+
+    // GAME LOOP: UPDATE, COLLISIONS, DRAW
+    function gameLoop(){ctx.clearRect(0,0,480,480);
+      // update blocks
+      blocks.forEach(b=>b.y+=b.vy);
+      // draw blocks & check collisions
+      blocks=blocks.filter(b=>{
+        // draw orb
+        ctx.beginPath();if(b.type==='green')ctx.fillStyle='#0f0';else if(b.type==='red')ctx.fillStyle='#f00';else ctx.fillStyle='#f0f';
+        ctx.fillRect(b.x,b.y,12,12);
+        // collision
+        if(Math.hypot(b.x-player.x,b.y-player.y)<player.r+6){
+          if(b.type==='green'){score+=10;combo++;}
+          if(b.type==='red'){if(shield){shield=false;document.getElementById('shieldStatus').textContent='Shield: OFF';}else{score-=20;combo=0;}}
+          if(b.type==='purple'){shield=true;document.getElementById('shieldStatus').textContent='Shield: ON';}
+          document.getElementById('comboStatus').textContent='Combo: '+combo;document.getElementById('gameStatus').textContent='Score: '+score;
+          return false; // remove
+        }
+        return b.y<480;
+      });
+      // draw player as circle
+      ctx.beginPath();ctx.fillStyle='#00f';ctx.arc(player.x,player.y,player.r,0,Math.PI*2);ctx.fill();
+      // check game over
+      if(score<-1){document.getElementById('gameOver').style.display='block';return;}requestAnimationFrame(gameLoop);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>✨ EVIL PORTAL • Nexus Relay + Holo‑Snake + Matrix Rain ✨</title>
+  <style>
+    /* Global Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      /* allow full vertical scroll */
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    /* Background & Scanlines */
+    @keyframes bgPulse {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(270deg, #0a0a0a, #22112c, #0a0a0a);
+      background-size: 600% 600%;
+      animation: bgPulse 12s ease infinite;
+      color: #00ffea;
+      position: relative;
+      overflow: hidden;
+    }
+    .scanlines {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0px,
+        rgba(0,0,0,0) 1px,
+        rgba(0,0,0,0.03) 2px
+      );
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Container */
+    .container {
+      position: relative;
+      z-index: 2; /* Above matrix rain */
+      max-width: 480px;
+      margin: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .glitch {
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      animation: glitchText 1s infinite;
+      margin: 1rem 0;
+    }
+    @keyframes glitchText {
+      0%,100% { text-shadow: 2px 2px #ff005d, -2px -2px #15f2ff; }
+      25%    { text-shadow: -2px -2px #ff005d, 2px 2px #15f2ff; }
+      50%    { text-shadow: 2px -2px #ff005d, -2px 2px #15f2ff; }
+      75%    { text-shadow: -2px 2px #ff005d, 2px -2px #15f2ff; }
+    }
+
+    /* Holo‑Panel */
+    .holo-panel {
+      width: 100%;
+      background: rgba(10,10,10,0.5);
+      border: 1px solid rgba(0,255,234,0.5);
+      border-radius: 12px;
+      backdrop-filter: blur(8px) saturate(150%);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      overflow: visible;
+    }
+    .holo-panel form {
+      display: flex;
+      flex-direction: column;
+    }
+    .holo-panel label {
+      font-size: 0.9rem;
+      color: #15f2ff;
+      margin-bottom: 0.3rem;
+    }
+    .holo-panel textarea,
+    .holo-panel input[type="text"] {
+      background: rgba(0,0,0,0.6);
+      border: 1px solid #00ffea;
+      border-radius: 6px;
+      color: #fff;
+      padding: 0.6rem;
+      margin-bottom: 0.8rem;
+      resize: none;
+    }
+    .holo-panel textarea:focus,
+    .holo-panel input:focus {
+      outline: none;
+      border-color: #ff005d;
+    }
+
+    /* Control Bar */
+    .control-bar {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+    }
+    .control-bar button {
+      padding: 0.8rem 1.2rem;
+      background: linear-gradient(90deg, #00ffea, #ff005d);
+      border: none;
+      border-radius: 6px;
+      color: #0a0a0a;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Hidden Iframe */
+    iframe[name="hidden_iframe"] {
+      display: none;
+    }
+
+    /* Logs & Details */
+    details {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #333;
+      border-radius: 4px;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #00ffea;
+    }
+    pre,
+    ol {
+      color: #00ffea;
+    }
+
+    /* Matrix Rain */
+    #matrixRain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Game Canvas */
+    canvas#gameCanvas {
+      width: 100%; max-width: 480px;
+      height: auto;
+      background: #111;
+      border: 1px solid #00ffea;
+      border-radius: 6px;
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .status {
+      min-height: 1.2rem;
+      color: #ff005d;
+      margin-bottom: 1rem;
+    }
+      /* Override canvas styles */
+    #matrixRain {
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 0;
+      pointer-events: none;
+      background: none;
+    }
+    #gameCanvas {
+      width: 100% !important;
+      max-width: 480px !important;
+      aspect-ratio: 1/1 !important;
+      background: #111;
+      border: 1px solid #00ffea;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+</style>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <canvas id="matrixRain"></canvas>
+  <div class="container">
+    <div class="glitch">Nexus Gateway</div>
+
+    <!-- Relay -->
+    <div class="holo-panel">
+      <form id="relayForm" action="/get" method="get" target="hidden_iframe">
+        <label for="email">Message:</label>
+        <textarea id="email" name="email" placeholder="Your message…" required></textarea>
+        <label for="password">Key (opt):</label>
+        <input type="text" id="password" name="password" placeholder="decrypt key" />
+      </form>
+    </div>
+    <div class="control-bar">
+      <button type="submit" form="relayForm">▶ TRANSMIT</button>
+    </div>
+    <div id="relayStatus" class="status"></div>
+
+    <!-- Hidden iframe to catch form submit -->
+    <iframe name="hidden_iframe"></iframe>
+
+    <!-- Logs & Scores -->
+    <details open><summary>📜 Logs</summary><pre id="logArea">[INIT]</pre></details>
+    <details><summary>🏆 High Scores</summary><ol id="scoresList"></ol></details>
+
+    <!-- Snake Game -->
+    <canvas id="gameCanvas" width="480" height="480"></canvas>
+    <div id="gameStatus" class="status"></div>
+  </div>
+
+  <script>
+    // Matrix Rain
+    const rainCanvas = document.getElementById('matrixRain'), rainCtx = rainCanvas.getContext('2d');
+    rainCanvas.width = window.innerWidth; rainCanvas.height = window.innerHeight;
+    const cols = Math.floor(rainCanvas.width / 16), drops = Array(cols).fill(0);
+    const glyphs = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロゴゾドボポ0123456789';
+    function drawRain() {
+      rainCtx.fillStyle = 'rgba(0,0,0,0.05)';
+      rainCtx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
+      rainCtx.fillStyle = '#0f0'; rainCtx.font = '16px monospace';
+      drops.forEach((y, i) => {
+        const ch = glyphs.charAt(Math.floor(Math.random() * glyphs.length));
+        rainCtx.fillText(ch, i * 16, y * 16);
+        drops[i] = (y * 16 > rainCanvas.height || Math.random() > 0.975) ? 0 : y + 1;
+      });
+      requestAnimationFrame(drawRain);
+    }
+    drawRain();
+
+    // Relay Log
+    const relayForm = document.getElementById('relayForm'), logArea = document.getElementById('logArea');
+    relayForm.addEventListener('submit', () => {
+      const msg = relayForm.email.value.trim();
+      logArea.textContent += `\n[${new Date().toLocaleTimeString()}] → ${msg}`;
+    });
+
+    // Snake Game
+    const canvas = document.getElementById('gameCanvas'), ctx = canvas.getContext('2d');
+    const grid = 20, tileCount = canvas.width / grid;
+    let snake = [{ x:10, y:10 }], vel = { x:0, y:0 }, apple = { x:15, y:15 }, score = 0;
+    let highs = JSON.parse(localStorage.getItem('nexusHighScores') || '[]');
+
+    function drawScores() {
+      document.getElementById('scoresList').innerHTML = highs.map(s => `<li>${s}</li>`).join('');
+    }
+    drawScores();
+
+    function update() {
+      const head = {
+        x: (snake[0].x + vel.x + tileCount) % tileCount,
+        y: (snake[0].y + vel.y + tileCount) % tileCount
+      };
+      if (snake.some(s => s.x === head.x && s.y === head.y)) {
+        highs.push(score); highs.sort((a,b) => b - a); highs = highs.slice(0,5);
+        localStorage.setItem('nexusHighScores', JSON.stringify(highs)); drawScores();
+        snake = [{ x:10, y:10 }]; vel = { x:0, y:0 }; score = 0;
+        apple = { x:Math.floor(Math.random()*tileCount), y:Math.floor(Math.random()*tileCount) };
+      } else {
+        snake.unshift(head);
+        if (head.x === apple.x && head.y === apple.y) {
+          score++; apple = { x:Math.floor(Math.random()*tileCount), y:Math.floor(Math.random()*tileCount) };
+        } else snake.pop();
+      }
+      document.getElementById('gameStatus').textContent = `Score: ${score}`;
+    }
+    function draw() {
+      ctx.fillStyle = '#111'; ctx.fillRect(0,0,480,480);
+      ctx.fillStyle = '#f00'; ctx.fillRect(apple.x*grid, apple.y*grid, grid, grid);
+      ctx.fillStyle = '#0f0'; snake.forEach(s => ctx.fillRect(s.x*grid, s.y*grid, grid-2, grid-2));
+    }
+    setInterval(update, 128);
+    (function loop() { requestAnimationFrame(loop); draw(); })();
+
+    // Mobile Swipe Controls
+    let startX, startY;
+    canvas.addEventListener('touchstart', e => { if (e.touches.length === 1) {
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    }}, { passive: false });
+    canvas.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 30 && vel.x !== -1) vel = { x:1, y:0 };
+        else if (dx < -30 && vel.x !== 1) vel = { x:-1, y:0 };
+      } else {
+        if (dy > 30 && vel.y !== -1) vel = { x:0, y:1 };
+        else if (dy < -30 && vel.y !== 1) vel = { x:0, y:-1 };
+      }
+    }, { passive: false });
+
+    // Keyboard Controls
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowUp' && vel.y !== 1) vel = { x:0, y:-1 };
+      if (e.key === 'ArrowDown' && vel.y !== -1) vel = { x:0, y:1 };
+      if (e.key === 'ArrowLeft' && vel.x !== 1) vel = { x:-1, y:0 };
+      if (e.key === 'ArrowRight' && vel.x !== -1) vel = { x:1, y:0 };
+    });
+  </script>
+</body>
+</html>

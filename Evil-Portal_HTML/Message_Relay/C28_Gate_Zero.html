@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>⚠️ C28 // GΛTΞ.ZΞR0 ⚠️</title>
+<style>
+  /* RESET & GLOBALS */
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html, body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Source Code Pro', monospace;color:#A9EAFE;}
+
+  /* HIDDEN EASTER EGG */
+  /* YOU FOUND THIS, GOOD. KEEP LOOKING. */
+
+  /* PERFORMANCE HINTS */
+  #grain, #scanlines {will-change: opacity;}
+  .glyph, .loadingBar:before {will-change: transform, opacity;}
+
+  /* SCANLINES & GRAIN */
+  @supports (mix-blend-mode: overlay) {
+    @keyframes grain{0%,100%{opacity:.1;}50%{opacity:.2;}}
+    #grain{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.05);pointer-events:none;mix-blend-mode:overlay;animation:grain .15s steps(2) infinite;z-index:9999;}
+  }
+  @supports not (mix-blend-mode: overlay) {
+    /* fallback: static noise image or skip grain */
+    #grain{display:none;}
+  }
+  #scanlines{position:fixed;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0) 1px,rgba(0,0,0,0.05) 2px);pointer-events:none;z-index:9998;}
+
+  /* RGB SPLIT FILTER */
+  svg#filters{position:absolute;width:0;height:0;}
+  @keyframes rgbShift{0%,100%{filter:none;}50%{filter:url(#rgbShift);} }
+  body{animation:rgbShift 10s infinite;}
+
+  /* BACKGROUND PULSE */
+  @keyframes bgPulse{0%{background:#000;}50%{background:#00111F;}100%{background:#000;}}
+  #main{display:none;position:fixed;inset:0;padding:2rem;overflow-y:auto;animation:bgPulse 8s infinite alternate;cursor:none;}
+
+  /* BOOT SEQUENCE */
+  #boot{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:100;transition:opacity .3s;}
+  #bootText{font-size:1.1rem;color:#B8F2E6;white-space:pre-wrap;max-width:80vw;text-align:center;}
+  @keyframes shake{0%,100%{transform:none;}20%{transform:translate(1px,-1px);}40%{transform:translate(-1px,1px);}60%{transform:translate(1px,1px);}80%{transform:translate(-1px,-1px);} }
+
+  /* MAIN PANEL */
+  .panel{max-width:600px;margin:2rem auto;padding:1.5rem;background:rgba(0,0,0,0.6);border:1px solid #0FF;box-shadow:0 0 20px #0FF;position:relative;animation:shake .2s infinite;background-clip:padding-box;}
+  .panel h1{text-align:center;margin-bottom:1rem;font-size:2rem;color:#A9EAFE;text-shadow:0 0 8px #0FF;font-family:'Cinzel',serif;letter-spacing:2px;}
+
+  form{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;}
+  textarea,input{background:#111;border:1px solid #0FF;color:#A9EAFE;padding:.5rem;font-family:inherit;resize:none;}
+  button{background:#0FF;color:#000;padding:.75rem;border:none;cursor:crosshair;font-weight:bold;transition:transform .2s,filter .2s;}
+  button:hover{transform:scale(1.05) skew(2deg);filter:url(#rgbShift);}
+
+  /* LOGS & ECHO */
+  #logs{height:120px;overflow-y:auto;background:#000;border:1px solid #0FF;padding:.5rem;font-size:.85rem;white-space:pre-wrap;}
+  #echoFeed{margin-top:1rem;font-size:.85rem;font-family:monospace;color:#777;}  
+
+  /* GLYPHS */
+  .glyphs{display:flex;justify-content:space-around;margin:1rem 0;}
+  .glyph{width:64px;height:64px;fill:none;stroke:#0FF;stroke-width:2;opacity:.7;cursor:pointer;animation:glitchAnim 3s infinite;}
+  .glyph[role="button"]:focus{outline:2px solid #0FF;}
+  @keyframes glitchAnim{0%,20%,40%,60%,80%,100%{transform:none;opacity:.7;}10%,30%,50%,70%,90%{transform:translate(2px,-2px) skew(1deg);opacity:1;}}
+
+  /* HIDDEN PANEL */
+  #hiddenPanel{display:none;margin-top:1rem;padding:1rem;background:#111;border:1px solid #F00;color:#F00;font-family:monospace;}
+  #hiddenPanel button{background:#F00;color:#000;margin-top:.5rem;}
+
+  /* FAKE LOADING BAR */
+  .loadingBar{width:100%;background:#111;border:1px solid #0FF;height:8px;position:relative;overflow:hidden;margin-bottom:1rem;}
+  .loadingBar:before{content:'';position:absolute;top:0;left:0;height:100%;width:20%;background:rgba(0,255,255,.5);animation:loadGlitch .8s infinite;}
+  @keyframes loadGlitch{0%{left:0;width:10%;}50%{left:80%;width:30%;}100%{left:0;width:10%;}}
+
+</style>
+<!-- Inline SVG Filter -->
+<svg id="filters" xmlns="http://www.w3.org/2000/svg"><filter id="rgbShift"><feOffset in="SourceGraphic" dx="2" dy="0" result="r"/><feOffset in="SourceGraphic" dx="-2" dy="0" result="b"/><feMerge><feMergeNode in="r"/><feMergeNode in="SourceGraphic"/><feMergeNode in="b"/></feMerge></filter></svg>
+<body>
+<!-- YOU FOUND THIS, GOOD. KEEP LOOKING. -->
+<div id="grain"></div><div id="scanlines"></div>
+<div id="boot"><div id="bootText" aria-live="assertive"></div></div>
+<div id="main" role="application" aria-label="Evil portal interface">
+  <div class="panel">
+    <h1>C28 // GΛTΞ.ZΞR0</h1>
+    <div class="loadingBar" aria-hidden="true"></div>
+    <form id="relayForm" aria-label="Signal transmitter" novalidate>
+      <textarea name="cmd" placeholder="Send signal..." rows="3" required aria-label="Command input"></textarea>
+      <input type="text" name="key" placeholder="Access key (opt)" aria-label="Access key">
+      <button type="submit">TRANSMIT</button>
+    </form>
+    <div id="logs" aria-live="polite">[INIT]</div>
+    <div id="echoFeed" aria-live="polite"></div>
+    <div class="glyphs">
+      <svg class="glyph" id="g1" role="button" tabindex="0" aria-label="Glyph 1" viewBox="0 0 64 64"><polygon points="32,4 60,60 4,60"/></svg>
+      <svg class="glyph" id="g2" role="button" tabindex="0" aria-label="Glyph 2" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/></svg>
+      <svg class="glyph" id="g3" role="button" tabindex="0" aria-label="Glyph 3" viewBox="0 0 64 64"><rect x="4" y="4" width="56" height="56"/></svg>
+    </div>
+    <div id="hiddenPanel" aria-hidden="true"><pre>> SECRET PATH: https://www.youtube.com/watch?v=K6DlFAfvnDw</pre><button id="copyBtn">Copy to Clipboard</button></div>
+  </div>
+</div>
+<script>
+/* TYPEWRITER with requestAnimationFrame */
+const messages=["INITIALIZING NODE… █","CONNECTION STABILITY… OK","DECRYPTING SIGNAL…","ACCESS GRANTED."];
+let lineIndex=0,charIndex=0,lastTime=0;
+const bootTxt=document.getElementById("bootText"),bootDiv=document.getElementById("boot");
+function typeLoop(timestamp){
+  if(!lastTime) lastTime=timestamp;
+  const delta=timestamp-lastTime;
+  if(lineIndex>=messages.length){
+    bootDiv.style.opacity=0;
+    setTimeout(()=>{bootDiv.remove();document.getElementById("main").style.display="block";startEcho();},300);
+    return;
+  }
+  const line=messages[lineIndex];
+  if(delta>=40){
+    if(charIndex<line.length){
+      bootTxt.textContent+=line.charAt(charIndex++);
+    } else {
+      bootDiv.style.animation="shake .3s";
+      setTimeout(()=>bootDiv.style.animation="",500);
+      lineIndex++;charIndex=0; 
+      bootTxt.textContent="";
+    }
+    lastTime=timestamp;
+  }
+  requestAnimationFrame(typeLoop);
+}
+document.addEventListener("DOMContentLoaded",()=>requestAnimationFrame(typeLoop));
+
+/* FORM INTERACTION */
+const form=document.getElementById("relayForm"),logs=document.getElementById("logs");
+form.addEventListener("submit",e=>{
+  e.preventDefault();
+  const txt=form.cmd.value.trim();
+  logs.textContent+="\n["+new Date().toLocaleTimeString()+"] → "+txt;
+});
+
+/* ECHO FEED */
+const echoMsgs=["Anomaly detected…","Audio signature: present.","Residue analysis: incomplete.","You are lucky to be here.","Don't touch my shapes.","Someone found a cookie."];
+function startEcho(){
+  let i=0;
+  setInterval(()=>{
+    document.getElementById("echoFeed").textContent=echoMsgs[i++%echoMsgs.length];
+  },4000);
+}
+
+/* GLYPH CLICK & KEYBOARD */
+let unlocked=false;
+["g1","g2","g3"].forEach(id=>{
+  const el=document.getElementById(id);
+  function activate(){
+    if(!unlocked && id==="g2"){ unlocked=true; document.getElementById("hiddenPanel").style.display="block"; document.getElementById("hiddenPanel").setAttribute('aria-hidden','false'); }
+    else{ const p=document.querySelector(".panel"); p.style.opacity=.5; setTimeout(()=>p.style.opacity=1,100); }
+  }
+  el.addEventListener("click",activate);
+  el.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" ") { e.preventDefault(); activate(); }});
+});
+
+/* COPY TO CLIPBOARD */
+const copyBtn=document.getElementById("copyBtn");
+copyBtn.addEventListener("click",()=>{
+  const text=window.location.origin+"/manifest/C28_RELIC.mp4";
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).catch(()=>alert('Copy failed'));
+  } else {
+    const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+  }
+});
+</script>
+</body>
+</html>
