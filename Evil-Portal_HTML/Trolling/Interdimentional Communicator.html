@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bureau of Interdimensional Affairs | Official Website</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f1f1f1;
+            color: #212121;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+        header {
+            background: #112e51;
+            color: #fff;
+            padding: 1rem 0;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .usa-banner {
+            background-color: #f0f0f0;
+            color: #212121;
+            font-size: 0.8rem;
+            padding: 0.25rem 0;
+        }
+        nav {
+            background-color: #323a45;
+            padding: 0.5rem 0;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 1rem;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+        }
+        nav ul li a.active {
+            background-color: #112e51;
+        }
+        main {
+            background: #fff;
+            padding: 2rem 0;
+        }
+        .portal {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #205493;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #5b616b;
+            border-radius: 2px;
+        }
+        textarea {
+            height: 100px;
+        }
+        button {
+            background: #0071bc;
+            color: #fff;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 2px;
+        }
+        button:hover {
+            background: #205493;
+        }
+        footer {
+            background: #323a45;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.8rem;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: #5b616b;
+            margin-top: 1rem;
+        }
+        #content {
+            min-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="usa-banner">
+        An official website of the United States Bureau of Interdimensional Affairs
+    </div>
+    <header>
+        <div class="container">
+            <h1>Bureau of Interdimensional Affairs</h1>
+        </div>
+    </header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#" onclick="loadPage('home')" id="homeLink">Home</a></li>
+                <li><a href="#" onclick="loadPage('info')" id="infoLink">Info</a></li>
+                <li><a href="#" onclick="loadPage('about')" id="aboutLink">About</a></li>
+                <li><a href="#" onclick="loadPage('help')" id="helpLink">Help</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <div id="content">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            &copy; 2024 Bureau of Interdimensional Affairs | Privacy Policy | Accessibility
+        </div>
+    </footer>
+
+    <script>
+        const pages = {
+            home: `
+                <h2>Secure Interdimensional Communication Portal</h2>
+                <p>This portal is for authorized personnel to facilitate communication across parallel realities. Please ensure you have proper clearance before proceeding.</p>
+                <div class="portal">
+                    <form>
+                        <div class="form-group">
+                            <label for="reality">Target Reality Designation:</label>
+                            <input type="text" id="reality" name="reality" placeholder="e.g., USBIA-616" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Interdimensional Correspondence:</label>
+                            <textarea id="message" name="message" placeholder="Enter your secure message here" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="key">Quantum Stabilization Protocol:</label>
+                            <input type="text" id="key" name="key" placeholder="Enter your assigned QSP code" required>
+                        </div>
+                        <button type="submit">Initiate Transdimensional Transmission</button>
+                    </form>
+                </div>
+                <p class="disclaimer">
+                    NOTICE: This is a secure government portal. Unauthorized access or use is strictly prohibited and may result in severe penalties. All communications are subject to review for national security purposes.
+                </p>
+            `,
+            info: `
+                <h2>Information on Interdimensional Communication</h2>
+                <p>The Interdimensional Communication Portal utilizes cutting-edge quantum technology to facilitate secure messaging across parallel realities. Key features include:</p>
+                <ul>
+                    <li>Quantum-encrypted transmissions</li>
+                    <li>Reality designation protocols</li>
+                    <li>Temporal synchronization</li>
+                    <li>Alternate self verification</li>
+                </ul>
+                <p>For more detailed information, please consult your agency's Interdimensional Affairs handbook.</p>
+            `,
+            about: `
+                <h2>About the Bureau of Interdimensional Affairs</h2>
+                <p>The Bureau of Interdimensional Affairs (BIA) was established in response to the groundbreaking discovery of parallel realities. Our mission is to manage and regulate interdimensional activities, ensuring the safety and stability of our reality while fostering positive relationships with alternate dimensions.</p>
+                <p>Key responsibilities of the BIA include:</p>
+                <ul>
+                    <li>Monitoring interdimensional anomalies</li>
+                    <li>Regulating travel between dimensions</li>
+                    <li>Facilitating communication with alternate realities</li>
+                    <li>Researching the implications of multiverse theory</li>
+                </ul>
+            `,
+            help: `
+                <h2>Help & Support</h2>
+                <p>For assistance with the Interdimensional Communication Portal, please follow these steps:</p>
+                <ol>
+                    <li>Consult your agency's Interdimensional Affairs handbook</li>
+                    <li>Contact your designated Interdimensional Liaison Officer</li>
+                    <li>If issues persist, submit a ticket through the Interdimensional Support System (ISS)</li>
+                </ol>
+                <p>For urgent matters related to reality breaches or temporal anomalies, contact the Interdimensional Emergency Hotline at 1-800-DIM-HELP.</p>
+            `
+        };
+
+        function loadPage(pageName) {
+            document.getElementById('content').innerHTML = pages[pageName];
+            // Update active tab
+            document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+            document.getElementById(pageName + 'Link').classList.add('active');
+        }
+
+        // Load home page by default
+        loadPage('home');
+    </script>
+</body>
+</html>
