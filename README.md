@@ -4,7 +4,7 @@ A Massive drop of a bunch of my personally saved data.
 
 # DO NOT COMMIT CRIMES, DUMMIE!
 
-Did you know tha crimes are illegal, even if they're fun? It's true; manipulating data or interfacing with devices you do not own has serious legal repercussions. I provide you access to my tools in good faith that you will utilize them for educational purposes or to troubleshoot or test YOUR OWN devices. If abuse is brought to my attention, I will shut down this repo in the name of commnity safety.
+Did you know tha crimes are illegal, even if they're fun? It's true; manipulating data or interfacing with devices you do not own has serious legal repercussions. I provide you access to my tools in good faith that you will utilize them for educational purposes or to troubleshoot or test YOUR OWN devices. If abuse is brought to my attention, I will shut down this repo in the name of community safety.
 
 # Dear Script Kiddies,
 
