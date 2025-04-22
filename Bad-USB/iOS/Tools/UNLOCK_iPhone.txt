@@ -1,0 +1,15 @@
+REM Title: Unlock_C28_iPhone
+REM Author: C28
+REM Description: Unlocks from Lock Screen
+REM Target: Locked iPhones
+
+DELAY 1000
+REM Wake Screen
+ENTER
+REM initiate unlock
+SPACE
+DELAY 1000
+REM Input Password (replace 000000 with the password for the device)
+STRING 000000
+ENTER
+DELAY 3000
