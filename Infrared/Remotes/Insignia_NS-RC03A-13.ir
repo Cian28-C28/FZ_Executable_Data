@@ -1,0 +1,134 @@
+Filetype: IR signals file
+Version: 1
+# 
+name: Power
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 0F F0 00 00
+# 
+name: Video
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 4C B3 00 00
+# 
+name: HDMI
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 50 AF 00 00
+# 
+name: ACC
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: B8 47 00 00
+# 
+name: Up
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 42 BD 00 00
+# 
+name: Right
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 15 EA 00 00
+# 
+name: Down
+type: raw
+frequency: 38000
+duty_cycle: 0.330000
+data: 9000 4467 608 530 609 1654 610 1656 607 530 610 531 608 530 610 529 610 1655 609 1656 635 502 609 1655 636 504 635 504 609 529 638 503 637 502 638 1624 639 1626 637 501 638 502 692 448 637 501 638 1625 692 449 637 503 636 503 637 1626 637 1625 638 1625 693 1572 692 448 637 1626 692 42397 9025 2190 637
+# 
+name: Left
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 16 E9 00 00
+# 
+name: Enter
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 18 E7 00 00
+# 
+name: Input
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 1D E2 00 00
+# 
+name: VolUp
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 0C F3 00 00
+# 
+name: VolDown
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 0D F2 00 00
+# 
+name: Mute
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 0E F1 00 00
+# 
+name: ChUp
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 0A F5 00 00
+# 
+name: ChDown
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 0B F4 00 00
+# 
+name: Play
+type: raw
+frequency: 38000
+duty_cycle: 0.330000
+data: 8999 4465 609 532 635 1629 634 1630 634 505 634 504 634 505 636 503 637 1630 633 1628 635 503 636 1628 635 504 636 507 633 505 634 504 635 503 636 505 634 505 637 506 633 504 635 1628 636 1627 636 1626 639 503 637 1628 635 1629 635 1628 635 1629 634 503 636 503 638 504 686 1579 634 42452 9024 2192 635 98861 8999 2218 636
+# 
+name: Pause
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 81 7E 00 00
+# 
+name: Stop
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 71 8E 00 00
+# 
+name: Menu
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 14 EB 00 00
+# 
+name: Home
+type: raw
+frequency: 38000
+duty_cycle: 0.330000
+data: 150 109256 104
+# 
+name: Exit
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 1B E4 00 00
+# 
+name: Info+
+type: parsed
+protocol: NECext
+address: 86 05 00 00
+command: 17 E8 00 00
